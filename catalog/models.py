@@ -37,6 +37,9 @@ class Genre(models.Model):
         return self.name
 
 
+
+
+
 class Book(models.Model):
     """
     Model representing a book (but not a specific copy of a book).
@@ -64,6 +67,13 @@ class Book(models.Model):
         """
         return reverse('book-detail', args=[str(self.id)])
 
+    def display_genre(self):
+        """
+        Creates a string for the Genre. This is required to display genre in Admin.
+        """
+        return ', '.join([ genre.name for genre in self.genre.all()[:3] ])
+    display_genre.short_description = 'Genre'
+
 
 class BookInstance(models.Model):
     """
@@ -87,11 +97,20 @@ class BookInstance(models.Model):
         ordering = ["due_back"]
 
 
+    def display_status(self):
+        """
+        Creates a string for the Genre. This is required to display genre in Admin.
+        """
+        return ', '.join([ BookInstance.name for BookInstance in self.BookInstance.all()[:3] ])
+    display_status.short_description = 'Status'
+
     def __str__(self):
         """
         String for representing the Model object
         """
         return '%s (%s)' % (self.id,self.book.title)
+
+
 
 class Author(models.Model):
     """
@@ -114,3 +133,5 @@ class Author(models.Model):
         String for representing the Model object.
         """
         return '%s, %s' % (self.last_name, self.first_name)
+
+
