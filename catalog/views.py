@@ -23,10 +23,20 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 2
 
-    context_object_name = 'my_book_list'
-    queryset = Book.objects.filter(title__icontains='Заблудшие')[:5]
-    template_name = 'books/book_list.html'
+    def get_queryset(self):
+        return Book.objects.filter(title__icontains='')
+
 
 class BookDetailView(generic.DetailView):
     model = Book
+
+
+
+class AuthorListView(generic.ListView):
+    model = Author
+
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
