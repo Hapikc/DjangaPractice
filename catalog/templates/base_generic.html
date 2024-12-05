@@ -43,6 +43,10 @@
                 {% if perms.catalog.can_mark_returned %}
                 <li><span>Персонал</span></li>
                 <li><a href="{% url 'users-borrowed' %}">Все одолженнные</a></li>
+                <li><a href="{% url 'author_create' %}">Создать автора</a></li>
+
+                <li><a href="{% url 'book_create' %}">Создать книгу</a></li>
+
                 {% endif %}
 
             </ul>
@@ -55,13 +59,13 @@
         <div class="pagination" style="margin-left: 26rem">
       <span class="page-links">
         {% if page_obj.has_previous %}
-          <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+          <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Предыдущая</a>
         {% endif %}
         <span class="page-current">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+          Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
         </span>
         {% if page_obj.has_next %}
-          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Следующая</a>
         {% endif %}
       </span>
         </div>
