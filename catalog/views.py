@@ -127,9 +127,8 @@ def send_email(request,pk):
         message = f"Название: {book.title}\n\nАвтор: {book.author}\n\nОписание: {book.summary}"
         from_email = request.POST.get('from_email', '')
         recipient_list = [request.POST.get('to_email', '')]
-
         send_mail(subject, message, from_email, recipient_list)
-        return HttpResponse('Email sent successfully!')
+        return HttpResponse('Письмо успешно отправлено!')
 
     return render(request, 'send_email.html')
 

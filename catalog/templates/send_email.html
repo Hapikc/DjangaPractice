@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Send Email</h1>
-    <form method="post">
+    <form method="POST">
         {% csrf_token %}
         <label for="to_email">To Email:</label>
         <input type="email" id="to_email" name="to_email" required><br><br>
