@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import permission_required
 from .forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.core.mail import send_mail
-from django.http import HttpResponse
+from django.core.mail import send_mail #функция для отправки письма
+from django.http import HttpResponse #функция возврата http ответа с текстом или html кодом
 
 
 def index(request):
@@ -120,15 +120,15 @@ class BookDelete(DeleteView):
     success_url = reverse_lazy('books')
 
 
-def send_email(request,pk):
+def send_email(request,pk):       #принимает 2 аргумента, объект запроса и первичный ключ
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
-        subject = request.POST.get('subject', '')
-        message = f"Название: {book.title}\n\nАвтор: {book.author}\n\nОписание: {book.summary}"
+        subject = request.POST.get('subject', '') #получает значение из POST запроса, если нет, то будет пустая строка
+        message = f"Название: {book.title}\n\nАвтор: {book.author}\n\nОписание: {book.summary}" # f строка позволяет использовать выражения без доп. методов форматирования
         from_email = request.POST.get('from_email', '')
         recipient_list = [request.POST.get('to_email', '')]
-        send_mail(subject, message, from_email, recipient_list)
+        send_mail(subject, message, from_email, recipient_list) #отправляет письмо с указанными параметрами
         return HttpResponse('Письмо успешно отправлено!')
 
-    return render(request, 'send_email.html')
+    return render(request, 'send_email.html') #возвращает html шаблон
 

@@ -10,7 +10,7 @@
 <p><strong>Жанр:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 <p>Получить инфо о книге</p>
 
-<a href="{% url 'send_email' book.author.pk %}">отправить почту</a>
+<a href="{% url 'send_email' book.pk %}">отправить почту</a>
 
 <div style="margin-left:20px;margin-top:20px">
     <h4>Копии</h4>
