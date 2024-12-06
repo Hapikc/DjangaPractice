@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import permission_required
 from .forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.core.mail import send_mail
+from django.http import HttpResponse
 
 
 def index(request):
@@ -35,7 +37,7 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 2
+    paginate_by = 10
 
     def get_queryset(self):
         return Book.objects.filter(title__icontains='')
@@ -83,8 +85,6 @@ def renew_book_librarian(request, pk):
         if form.is_valid():
             book_inst.due_back = form.cleaned_data['renewal_date']
             book_inst.save()
-
-            # return HttpResponseRedirect(reverse('all-borrowed') ) от дз
             return HttpResponseRedirect('/')
 
     else:
@@ -118,3 +118,18 @@ class BookUpdate(UpdateView):
 class BookDelete(DeleteView):
     model = Book
     success_url = reverse_lazy('books')
+
+
+def send_email(request,pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        subject = request.POST.get('subject', '')
+        message = f"Название: {book.title}\n\nАвтор: {book.author}\n\nОписание: {book.summary}"
+        from_email = request.POST.get('from_email', '')
+        recipient_list = [request.POST.get('to_email', '')]
+
+        send_mail(subject, message, from_email, recipient_list)
+        return HttpResponse('Email sent successfully!')
+
+    return render(request, 'send_email.html')
+

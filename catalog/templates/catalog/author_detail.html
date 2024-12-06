@@ -1,17 +1,17 @@
-{% extends "base_generic.html" %}
+   {% extends "base_generic.html" %}
 
-{% block content %}
-<h1>Автор: {{ author.last_name }}, {{ author.first_name }}</h1>
-<p style="color: gray">{{author.date_of_birth}} -</p>
-<h4 style="margin: 20px 0 15px 20px">Книги</h4>
-
-
- {% for book in author.book_set.all %}
-    <a href="{% url 'book-detail' book.pk %}">{{ book }}</a>
-    {{ book.summary }} <br>
-    {% empty %}
-    <p>У автора нет книг</p>
-    {% endfor %}
+   {% block content %}
+   <h1>Автор: {{ author.last_name }}, {{ author.first_name }}</h1>
+   <p style="color: gray">{{author.date_of_birth}} -</p>
+   <h4 style="margin: 20px 0 15px 20px">Книги</h4>
 
 
-{% endblock %}
+    {% for book in author.book_set.all %}
+       <a href="{% url 'book-detail' book.pk %}">{{ book }}</a>
+       {{ book.summary }} <br>
+       {% empty %}
+       <p>У автора нет книг</p>
+       {% endfor %}
+
+
+   {% endblock %}

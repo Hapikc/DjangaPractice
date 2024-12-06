@@ -1,5 +1,8 @@
 from django.urls import re_path
 from . import views
+from .views import send_email
+
+
 
 urlpatterns = [
     re_path(r'^$', views.index, name='index'),
@@ -16,4 +19,5 @@ urlpatterns = [
     re_path(r'^book/create/$', views.BookCreate.as_view(), name='book_create'),
     re_path(r'^book/(?P<pk>\d+)/update/$', views.BookUpdate.as_view(), name='book_update'),
     re_path(r'^book/(?P<pk>\d+)/delete/$', views.BookDelete.as_view(), name='book_delete'),
+    re_path(r'^send-email/(?P<pk>\d+)', send_email, name='send_email'), #ссылка для переадресации на отправку письма
 ]
